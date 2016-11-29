@@ -18,22 +18,51 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/test")
+     * @Route("/conversation")
      */
-    public function testAction(Request $request)
+    public function conversationAction(Request $request)
     {
-        // tableau de mots à vérifier
-        $words  = array('hello','bonjour','salut','coucou',
-            'cc','hi','bonsoir','good morning');
-
+        $entityManager = $this->getDoctrine()->getManager();
         $text = $request->request->get('text');
+        $conversations = $entityManager->getRepository('KarismatikChatBotBundle:Conversation')->getResponseByInput($text);
 
-        $lev = levenshtein($text, 'bonsoir');
+        $result = $this->getBestResponse($text, $conversations);
 
-        if($lev<3)
-            return new Response('Bonjour est ce que vouvlez .....');
-        else
-            return new Response('verfier votre saisie');
+        if ($result) {
+            if ($result['lev'] < 3 && strlen($text) > 2) {
+                return new Response($result['response']);
+            } else {
+                return new Response('Tu veux dire "' . $result['input'] . '"?');
+            }
+        } else {
 
+            return new Response("J'ai pas compris!");
+        }
+    }
+
+    /**
+     * @param $pattern
+     * @param $results
+     * @return array|mixed
+     */
+    public function getBestResponse($pattern, $results)
+    {
+        $r = array();
+        $lev = 10;
+        foreach ($results as $result) {
+            $inputs = explode(';', $result->getInput());
+            foreach ($inputs as $input) {
+                $l = levenshtein($pattern, $input);
+                if ($l < $lev) $lev = $l;
+            }
+            $r[$lev] = array('lev' => $lev, 'pattern' => $pattern, 'input' => $input, 'response' => $result->getResponse());
+        }
+
+        if ($lev > 4) {
+            return array();
+        }
+
+        asort($r);
+        return array_shift($r);
     }
 }
