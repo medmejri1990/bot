@@ -42,7 +42,7 @@
             messageleft.draw();
             $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
             $.ajax({
-                url : window.location.href+'/test',
+                url : window.location.href+'conversation',
                 type : 'POST',
                 data : 'text=' +getMessageText(),
                 success : function(code_html, statut){ // success est toujours en place, bien sûr !
