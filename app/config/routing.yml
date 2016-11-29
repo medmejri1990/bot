@@ -1,0 +1,8 @@
+karismatik_chat_bot:
+    resource: "@KarismatikChatBotBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
