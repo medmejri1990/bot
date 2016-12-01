@@ -1,0 +1,41 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body %}
+    <h1>Liste des conversations</h1>
+
+    <table class="table table-striped"  style="width: 90%; margin-left: auto; margin-right: auto;">
+        <thead>
+            <tr>
+                <th width="45%"><i class="fa fa-user" style="text-align: left;"></i> Text entré</th>
+                <th width="45%"><i class="fa fa-calendar" style="text-align: left;"></i> Réponse</th>
+                <th width="10%" colspan="2"><i class="fa fa-cogs"></i> Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conversation in conversations %}
+            <tr>
+                <td>{{ conversation.input }}</td>
+                <td>{{ conversation.response }}</td>
+                <td  style="text-align: center;">
+                    <div class="item-actions">
+                        <a href="{{ path('admin_conversation_show', { id: conversation.id }) }}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-edit"></i> Voir
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="item-actions">
+                        <a href="{{ path('admin_conversation_edit', { id: conversation.id }) }}" class="btn btn-sm btn-primary">
+                            <i class="fa fa-edit"></i> Modifier
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" align="center">Pas de conversation</td>
+           </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

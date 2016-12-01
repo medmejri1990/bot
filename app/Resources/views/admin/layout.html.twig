@@ -1,0 +1,25 @@
+<html>
+<head>
+    {% block stylesheets %}
+        {% stylesheets '@KarismatikChatBotBundle/Resources/public/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+
+</head>
+<body>
+<li>
+    <a href="{{ path('admin_conversation_index') }}">
+        <i class="fa fa-list-alt"></i> Liste des conversations
+    </a>
+</li>
+<li>
+    <a href="{{ path('admin_conversation_new') }}">
+        <i class="fa fa-home"></i> Ajouter une conversation
+    </a>
+</li>
+{% block body %}
+
+{% endblock %}
+</body>
+

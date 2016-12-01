@@ -1,0 +1,18 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block body %}
+    <h1>Ajouter une conversation</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.input) }}
+        {{ form_row(form.response) }}
+
+        <input type="submit" value="Enregistrer" class="btn btn-primary" />
+
+        {{ form_widget(form.saveAndCreateNew, { label: 'Enregistrer et ajouter', attr: { class: 'btn btn-primary' } }) }}
+
+        <a href="{{ path('admin_conversation_index') }}" class="btn btn-link">
+            {{ 'Retour au liste des conversations'|trans }}
+        </a>
+    {{ form_end(form) }}
+{% endblock %}
