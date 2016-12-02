@@ -193,3 +193,5 @@ body {
 .message_template {
   display: none;
 }
+
+.current_link {cursor: pointer;}
